@@ -9,6 +9,7 @@ import store from './redux/store'
 import './tailwind.generated.css'
 
 import Header from './components/Header/Header'
+import LoginForm from './components/LoginForm/LoginForm'
 
 const App: React.FC = () => (
   <Provider store={store}>
@@ -16,7 +17,7 @@ const App: React.FC = () => (
       <Header />
       <Switch>
         <Route path="/">
-          <div className="container mx-auto">Hello world</div>
+          <LoginForm />
         </Route>
       </Switch>
     </Router>
