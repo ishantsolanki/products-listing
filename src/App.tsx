@@ -6,13 +6,14 @@ import {
 } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './redux/store'
+import './tailwind.generated.css'
 
 const App: React.FC = () => (
   <Provider store={store}>
     <Router>
       <Switch>
         <Route path="/">
-          Hello world
+          <div className="container mx-auto">Hello world</div>
         </Route>
       </Switch>
     </Router>
