@@ -11,6 +11,7 @@ import './tailwind.generated.css'
 import Header from './components/Header/Header'
 import LoginForm from './components/LoginForm/LoginForm'
 import SignupForm from './components/SignupForm/SignupForm'
+import ListingsLayout from './components/ListingsLayout/ListingsLayout'
 
 const App: React.FC = () => (
   <Provider store={store}>
@@ -20,6 +21,7 @@ const App: React.FC = () => (
         <Route exact path="/" component={SignupForm} />
         <Route path="/signup" component={SignupForm} />
         <Route path="/login" component={LoginForm} />
+        <Route path="/listings" component={ListingsLayout} />
       </Switch>
     </Router>
   </Provider>
