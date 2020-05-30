@@ -1,11 +1,24 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 
 import { CURRENCY } from '../../types/Product'
 import InputRow from '../InputRow/InputRow'
 
+import { addProduct } from '../../redux/actions/productActions'
+
 const inputClassName = 'bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-md py-2 px-4 appearance-none leading-normal w-2/3';
 
-export const Sidebar = () => {
+const mapDispatchToProps = {
+  addProductBound: addProduct
+}
+
+interface Props {
+  addProductBound: ({ name, description, price, currency }: { name: string, description: string, price: number, currency: CURRENCY }) => Promise<any>
+}
+
+export const Sidebar: React.FC<Props> = ({
+  addProductBound
+}) => {
   const options = [];
   const [name, setName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
@@ -21,7 +34,17 @@ export const Sidebar = () => {
     const validInputs = !!name && !!description && !!price && !!currency
 
     if (validInputs) {
-      console.log('bang')
+      addProductBound({
+        name,
+        description,
+        price: Number(price),
+        currency
+      }).then(() => {
+        setName('')
+        setDescription('')
+        setPrice('0')
+        setCurrency(CURRENCY.AUD)
+      })
     } else {
       setIsInvalidInputs(true)
     }
@@ -91,4 +114,4 @@ export const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export default connect(null, mapDispatchToProps)(Sidebar)

@@ -19,7 +19,10 @@ const setupExpress = () => {
       username: req.body.userEmail,
       password: req.body.password
     }).save((err) => {
-      if (err) res.sendStatus(400)
+      if (err) {
+        res.sendStatus(400)
+        return
+      }
       res.send('success')
     })
   })
@@ -33,6 +36,28 @@ const setupExpress = () => {
     .catch(err => {
       res.setStatus(404)
       res.send(err)
+    })
+  })
+
+  app.post('/addProduct', (req, res) => {
+    const {
+      name,
+      description,
+      price,
+      currency,
+    } = req.body
+    new mongoDb.Product({
+      name,
+      description,
+      price,
+      currency
+    }).save((err) => {
+      if (err) {
+        res.sendStatus(400)
+        return
+      }
+
+      res.send('success')
     })
   })
 }
