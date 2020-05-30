@@ -10,12 +10,16 @@ import './tailwind.generated.css'
 
 import Header from './components/Header/Header'
 import LoginForm from './components/LoginForm/LoginForm'
+import SignupForm from './components/SignupForm/SignupForm'
 
 const App: React.FC = () => (
   <Provider store={store}>
     <Router>
       <Header />
       <Switch>
+        <Route path="/signup">
+          <SignupForm />
+        </Route>
         <Route path="/">
           <LoginForm />
         </Route>
