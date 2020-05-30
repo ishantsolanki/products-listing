@@ -13,3 +13,8 @@ yarn build && yarn serve
 This creates a production build of the client and serves it from express app
 
 Fire up the browser and navigate to `http://localhost:3001`
+
+
+## Things with scope of improvement
+
+- The login functionality is pretty basic and is nowhere close to secure. Please dont use sensitive imformation
