@@ -17,12 +17,9 @@ const App: React.FC = () => (
     <Header />
     <Router>
       <Switch>
-        <Route path="/signup">
-          <SignupForm />
-        </Route>
-        <Route path="/login">
-          <LoginForm />
-        </Route>
+        <Route exact path="/" component={SignupForm} />
+        <Route path="/signup" component={SignupForm} />
+        <Route path="/login" component={LoginForm} />
       </Switch>
     </Router>
   </Provider>
