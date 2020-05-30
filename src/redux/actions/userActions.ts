@@ -1,4 +1,4 @@
-import { signup } from './api'
+import { signup, checkUserCredentials } from './api'
 
 export enum USER_TYPES {
   SIGNUP_USER_REQUEST = 'SIGNUP_USER_REQUEST',
@@ -9,11 +9,9 @@ export enum USER_TYPES {
 type dispatchType = ({ type }: { type: USER_TYPES }) => Promise<any> | void
 
 export const signupUser = ({ userEmail, password }: {userEmail: string, password: string}) =>
-(dispatch: dispatchType, getState: () => any) => {
-  dispatch({ type: USER_TYPES.SIGNUP_USER_REQUEST })
+  (dispatch: dispatchType) =>
+  signup({ userEmail, password })
 
-  return signup({ username: userEmail, password })
-  .catch((err) => {
-    dispatch({ type: USER_TYPES.SIGNUP_USER_ERROR })
-  })
-}
+export const checkUser = ({ userEmail, password }: {userEmail: string, password: string}) =>
+  (dispatch: dispatchType) =>
+  checkUserCredentials({ userEmail, password }).then(response => response.json())

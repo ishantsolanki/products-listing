@@ -58,9 +58,7 @@ export const LoginForm: React.FC<Props> = ({
       signupUserBound({
         userEmail,
         password
-      }).then(() => {
-        history.push('/login#signedup')
-      })
+      }).then(() => history.push('/login#signedup'))
     }
   }
 

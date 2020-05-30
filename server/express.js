@@ -15,17 +15,24 @@ const setupExpress = () => {
   app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../build/index.html')))
 
   app.put('/signup', (req, res) => {
-    console.log('recieved request for signup', JSON.stringify(req.body.username, req.body.password))
+    new mongoDb.User({
+      username: req.body.userEmail,
+      password: req.body.password
+    }).save((err) => {
+      if (err) res.sendStatus(400)
+      res.send('success')
+    })
+  })
 
-
-    const newUser = new mongoDb.User({
-      username: req.body.username,
+  app.put('/checkUser', (req, res) => {
+    mongoDb.User.exists({
+      username: req.body.userEmail,
       password: req.body.password
     })
-
-    newUser.save((err) => {
-      if (err) res.setStatus(400)
-      res.send('success')
+    .then(exists => res.send({ result: exists }))
+    .catch(err => {
+      res.setStatus(404)
+      res.send(err)
     })
   })
 }

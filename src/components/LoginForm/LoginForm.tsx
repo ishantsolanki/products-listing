@@ -1,18 +1,32 @@
 import React, { useState, ChangeEvent } from 'react'
-import { useLocation } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { useLocation, useHistory } from 'react-router-dom'
 
 import InputRow from '../InputRow/InputRow'
 import SignupLink from './SignupLink'
 
-export const LoginForm: React.FC = () => {
-  const [username, setUsername] = useState<string>('')
+import { checkUser } from '../../redux/actions/userActions'
+
+interface Props {
+  checkUserBound: ({ userEmail, password }: { userEmail: string, password: string}) => Promise<any>
+}
+
+export const mapDispatchToProps = {
+  checkUserBound: checkUser
+}
+
+export const LoginForm: React.FC<Props> = ({
+  checkUserBound
+}) => {
+  const [userEmail, setUserEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [isFormValid, setIsFormValid] = useState<boolean>(true)
   const location = useLocation()
+  const history = useHistory()
   const isSignedUp = location.hash.replace('#', '') === 'signedup'
 
-  const onUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value)
+  const onUserEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setUserEmail(event.target.value)
     setIsFormValid(true)
   }
 
@@ -22,12 +36,15 @@ export const LoginForm: React.FC = () => {
   }
 
   const checkLogin = () => {
-    if (username === 'example@love.com' && password === 'admin') {
-      setIsFormValid(true)
-      alert('You logged in')
-    } else {
-      setIsFormValid(false)
-    }
+    checkUserBound({ userEmail, password })
+      .then((response) => {
+        if (response.result) {
+          history.push('/listings')
+          setIsFormValid(true)
+        } else {
+          setIsFormValid(false)
+        }
+      })
   }
 
   return (
@@ -42,8 +59,8 @@ export const LoginForm: React.FC = () => {
         <div className="p-5">
           <InputRow label="Username">
             <input
-              value={username}
-              onChange={onUsernameChange}
+              value={userEmail}
+              onChange={onUserEmailChange}
               className={`bg-white
                 focus:outline-none
                 focus:shadow-outline
@@ -95,4 +112,4 @@ export const LoginForm: React.FC = () => {
   )
 }
 
-export default LoginForm
+export default connect(null, mapDispatchToProps)(LoginForm)
