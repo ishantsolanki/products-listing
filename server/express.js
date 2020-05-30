@@ -60,6 +60,22 @@ const setupExpress = () => {
       res.send('success')
     })
   })
+
+  app.get('/fetchProducts', (req, res) => {
+    mongoDb.Product.find((err, products) => {
+      if (err) {
+        res.sendStatus(400)
+      }
+
+      return res.json(products.map(product => ({
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        currency: product.currency,
+        id: product._id
+      })))
+    })
+  })
 }
 
 module.exports = setupExpress

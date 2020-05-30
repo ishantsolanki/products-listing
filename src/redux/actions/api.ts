@@ -37,3 +37,8 @@ export const addProductApi = (formData: { name: string, description: string, cur
   }
   return fetch('http://localhost:3001/addProduct', options)
 }
+
+export const fetchProductsApi = async () => {
+  const response = await fetch('http://localhost:3001/fetchProducts')
+  return await response.json()
+}

@@ -1,11 +1,42 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { List, Record } from 'immutable'
+import { connect } from 'react-redux'
 
-export const Listing = () => {
+import { ProductType } from '../../types/Product'
+
+import { fetchProducts } from '../../redux/actions/productActions'
+
+import ProductCard from '../ProductCard/ProductCard'
+
+export const mapStateToProps = (state: any) => ({
+  products: state.products.listing
+})
+
+export const mapDispatchToProps = {
+  fetchProductsBound: fetchProducts
+}
+
+interface Props {
+  products: List<Record<ProductType>>
+  fetchProductsBound: () => Promise<any>
+}
+
+export const Listing: React.FC<Props> = ({
+  products,
+  fetchProductsBound,
+}) => {
+
+  useEffect(() => {
+    fetchProductsBound()
+  }, [fetchProductsBound])
+
   return (
     <>
-    No products yet. Add some products =>
+      {products.map(product => (
+        <ProductCard id={product.get('id')} />
+      ))}
     </>
   )
 }
 
-export default Listing
+export default connect(mapStateToProps, mapDispatchToProps)(Listing)
