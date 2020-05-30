@@ -8,11 +8,11 @@ export enum USER_TYPES {
 
 type dispatchType = ({ type }: { type: USER_TYPES }) => Promise<any> | void
 
-export const signupUser = ({ username, password }: {username: string, password: string}) =>
+export const signupUser = ({ userEmail, password }: {userEmail: string, password: string}) =>
 (dispatch: dispatchType, getState: () => any) => {
   dispatch({ type: USER_TYPES.SIGNUP_USER_REQUEST })
 
-  return signup({ username, password })
+  return signup({ username: userEmail, password })
   .catch((err) => {
     dispatch({ type: USER_TYPES.SIGNUP_USER_ERROR })
   })

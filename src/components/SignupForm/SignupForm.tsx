@@ -12,36 +12,56 @@ const mapDispatchToProps = {
 }
 
 interface Props {
-  signupUserBound: ({ username, password }: { username: string, password: string}) => Promise<any>
+  signupUserBound: ({ userEmail, password }: { userEmail: string, password: string}) => Promise<any>
 }
 
 export const LoginForm: React.FC<Props> = ({
   signupUserBound
 }) => {
-  const [username, setUsername] = useState<string>('')
+  const [userEmail, setUserEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [passwordStateInvalid, setPasswordStateInvalid] = useState<boolean>(false)
+  const [emailInvalid, setEmailInvalid] = useState<boolean>(false)
   const history = useHistory()
 
-  const onUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value)
+  const onUserEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setUserEmail(event.target.value)
   }
 
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPasswordStateInvalid(false)
     setPassword(event.target.value)
   }
 
   const onConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPasswordStateInvalid(false)
     setConfirmPassword(event.target.value)
   }
 
   const onSignupClick = (event: MouseEvent<HTMLButtonElement>) => {
-    signupUserBound({
-      username,
-      password
-    }).then(() => {
-      history.push('/login#signedup')
-    })
+    let formValid = true
+    const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+    if (!emailRegex.test(userEmail)) {
+      setEmailInvalid(true)
+      formValid = false
+    }
+
+    if (password !== confirmPassword || password === '') {
+      setPasswordStateInvalid(true)
+      formValid = false
+    }
+
+    if (formValid) {
+      setEmailInvalid(false)
+      setPasswordStateInvalid(false)
+      signupUserBound({
+        userEmail,
+        password
+      }).then(() => {
+        history.push('/login#signedup')
+      })
+    }
   }
 
   return (
@@ -51,15 +71,15 @@ export const LoginForm: React.FC<Props> = ({
           Sign Up
         </div>
         <div className="p-5 text-right pr-12">
-          <InputRow label="Username">
+          <InputRow label="User Email">
             <input
-              value={username}
-              onChange={onUsernameChange}
+              value={userEmail}
+              onChange={onUserEmailChange}
               className={`bg-white
                 focus:outline-none
                 focus:shadow-outline
                 border
-                border-gray-300
+                ${emailInvalid ? 'border-red-300' : 'border-gray-300'}
                 rounded-md
                 py-2 px-4
                 appearance-none
@@ -67,7 +87,7 @@ export const LoginForm: React.FC<Props> = ({
               `}
               type="email"
               placeholder="email@example.com"
-              id="Username"
+              id="User Email"
             />
           </InputRow>
 
@@ -79,7 +99,7 @@ export const LoginForm: React.FC<Props> = ({
                 focus:outline-none
                 focus:shadow-outline
                 border
-                border-gray-300
+                ${passwordStateInvalid ? 'border-red-300' : 'border-gray-300'}
                 rounded-md
                 py-2 px-4
                 appearance-none
@@ -98,17 +118,23 @@ export const LoginForm: React.FC<Props> = ({
                 focus:outline-none
                 focus:shadow-outline
                 border
-                border-gray-300
+                ${passwordStateInvalid ? 'border-red-300' : 'border-gray-300'}
                 rounded-md
                 py-2 px-4
                 appearance-none
                 leading-normal
               `}
               type="password"
-              id="ConfirmPassword"
+              id="Confirm Password"
             />
           </InputRow>
         </div>
+        {passwordStateInvalid && (
+          <div className="text-red-400 pb-4 text-center">Passwords dont match. Type in the same password</div>
+        )}
+        {emailInvalid && (
+          <div className="text-red-400 pb-4 text-center">Email is not the correct format</div>
+        )}
 
         <div className="text-center p-5 pt-0">
           <button className="px-4 py-2 border-teal-300 border rounded-md bg-teal-400 text-white font-bold" onClick={onSignupClick}>Sign Up</button>
