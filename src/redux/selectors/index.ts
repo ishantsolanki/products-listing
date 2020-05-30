@@ -1,5 +1,3 @@
-import { List } from 'immutable'
-
 import { ReduxState }from '../reducer/rootReducer'
 
 export const getProductById = (id: string) => (state: ReduxState) => {
