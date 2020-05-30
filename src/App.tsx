@@ -14,13 +14,13 @@ import SignupForm from './components/SignupForm/SignupForm'
 
 const App: React.FC = () => (
   <Provider store={store}>
+    <Header />
     <Router>
-      <Header />
       <Switch>
         <Route path="/signup">
           <SignupForm />
         </Route>
-        <Route path="/">
+        <Route path="/login">
           <LoginForm />
         </Route>
       </Switch>

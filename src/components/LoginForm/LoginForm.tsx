@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import InputRow from '../InputRow/InputRow'
 import SignupLink from './SignupLink'
@@ -7,6 +8,8 @@ export const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [isFormValid, setIsFormValid] = useState<boolean>(true)
+  const location = useLocation()
+  const isSignedUp = location.hash.replace('#', '') === 'signedup'
 
   const onUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value)
@@ -29,6 +32,9 @@ export const LoginForm: React.FC = () => {
 
   return (
     <div className="container mx-auto text-center max-w-md pt-40">
+      {isSignedUp && (
+        <div className="pb-4 text-green-500 font-bold"> Signed up successfully! Login to continue</div>
+      )}
       <div className="border-solid border-gray-200 border-2 rounded-md">
         <div className="bg-gray-200 text-lg py-3">
           Login

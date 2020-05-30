@@ -13,6 +13,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "immutable": "^4.0.0-rc.12",
     "mongodb": "^3.5.8",
@@ -38,7 +39,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "serve": "nodemon server.js"
+    "serve": "nodemon server.js",
+    "serve:debug": "nodemon --inspect server.js 3000"
   },
   "eslintConfig": {
     "extends": "react-app"

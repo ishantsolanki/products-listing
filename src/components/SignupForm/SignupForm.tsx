@@ -1,12 +1,27 @@
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState, ChangeEvent, MouseEvent } from 'react'
+import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+import { signupUser } from '../../redux/actions/userActions';
 
 import InputRow from '../InputRow/InputRow'
 import LoginLink from './LoginLink'
 
-export const LoginForm: React.FC = () => {
+const mapDispatchToProps = {
+  signupUserBound: signupUser
+}
+
+interface Props {
+  signupUserBound: ({ username, password }: { username: string, password: string}) => Promise<any>
+}
+
+export const LoginForm: React.FC<Props> = ({
+  signupUserBound
+}) => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const history = useHistory()
 
   const onUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value)
@@ -18,6 +33,15 @@ export const LoginForm: React.FC = () => {
 
   const onConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(event.target.value)
+  }
+
+  const onSignupClick = (event: MouseEvent<HTMLButtonElement>) => {
+    signupUserBound({
+      username,
+      password
+    }).then(() => {
+      history.push('/login#signedup')
+    })
   }
 
   return (
@@ -87,7 +111,7 @@ export const LoginForm: React.FC = () => {
         </div>
 
         <div className="text-center p-5 pt-0">
-          <button className="px-4 py-2 border-teal-300 border rounded-md bg-teal-400 text-white font-bold">Sign Up</button>
+          <button className="px-4 py-2 border-teal-300 border rounded-md bg-teal-400 text-white font-bold" onClick={onSignupClick}>Sign Up</button>
         </div>
       </div>
 
@@ -98,4 +122,4 @@ export const LoginForm: React.FC = () => {
   )
 }
 
-export default LoginForm
+export default connect(null, mapDispatchToProps)(LoginForm)
