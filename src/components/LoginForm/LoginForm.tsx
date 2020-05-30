@@ -1,18 +1,7 @@
 import React, { useState, ChangeEvent } from 'react'
 
-interface InputRowProps {
-  label: string,
-}
-
-const InputRow: React.FC<InputRowProps> = ({
-  label,
-  children
-}) => (
-  <div className="pb-4">
-    <label htmlFor={label} className="mr-3">{label}</label>
-    {children}
-  </div>
-)
+import InputRow from '../InputRow/InputRow'
+import SignupLink from './SignupLink'
 
 export const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('')
@@ -21,10 +10,12 @@ export const LoginForm: React.FC = () => {
 
   const onUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value)
+    setIsFormValid(true)
   }
 
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value)
+    setIsFormValid(true)
   }
 
   const checkLogin = () => {
@@ -89,6 +80,10 @@ export const LoginForm: React.FC = () => {
             <button className="px-4 py-2 border-teal-300 border rounded-md bg-teal-400 text-white font-bold" onClick={checkLogin}>Log In</button>
           </div>
         </div>
+      </div>
+
+      <div className="pt-3">
+        <SignupLink />
       </div>
     </div>
   )
