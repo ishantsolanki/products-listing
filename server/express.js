@@ -2,8 +2,11 @@ const express = require('express')
 const path = require('path')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+
+const users = require('./users')
+const products = require('./products')
+
 const app = express()
-const mongoDb = require('./mongodb')
 
 const setupExpress = () => {
   app.use(bodyParser.urlencoded({ extended: true }))
@@ -14,94 +17,17 @@ const setupExpress = () => {
   app.listen(3001, () => console.log('Server listening on 3001'))
   app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../build/index.html')))
 
-  app.put('/signup', (req, res) => {
-    new mongoDb.User({
-      username: req.body.userEmail,
-      password: req.body.password
-    }).save((err) => {
-      if (err) {
-        res.sendStatus(400)
-        return
-      }
-      res.send('success')
-    })
-  })
+  app.put('/signup', users.signUp)
 
-  app.put('/checkUser', (req, res) => {
-    mongoDb.User.exists({
-      username: req.body.userEmail,
-      password: req.body.password
-    })
-    .then(exists => res.send({ result: exists }))
-    .catch(err => {
-      res.setStatus(404)
-      res.send(err)
-    })
-  })
+  app.put('/checkUser', users.checkUser)
 
-  app.post('/addProduct', (req, res) => {
-    const {
-      name,
-      description,
-      price,
-      currency,
-    } = req.body
-    new mongoDb.Product({
-      name,
-      description,
-      price,
-      currency
-    }).save((err) => {
-      if (err) {
-        res.sendStatus(400)
-        return
-      }
+  app.post('/addProduct', products.addProduct)
 
-      res.send('success')
-    })
-  })
+  app.get('/fetchProducts', products.fetchProducts)
 
-  app.get('/fetchProducts', (req, res) => {
-    mongoDb.Product.find((err, products) => {
-      if (err) {
-        res.sendStatus(400)
-      }
+  app.delete('/deleteProduct', products.deleteProduct)
 
-      return res.json(products.map(product => ({
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        currency: product.currency,
-        id: product._id
-      })))
-    })
-  })
-
-  app.delete('/deleteProduct', (req, res) => {
-    if (req.query.id) {
-      mongoDb.Product.findByIdAndRemove(req.query.id, (err) => {
-        if (err) {
-          res.sendStatus(400)
-          return
-        }
-
-        res.send('success')
-      })
-    } else {
-      res.sendStatus(400)
-    }
-  })
-
-  app.put('/updateProduct', (req, res) => {
-    mongoDb.Product.findByIdAndUpdate(req.body.id, req.body, (err, ) => {
-      if (err) {
-        res.sendStatus(400)
-        return
-      }
-
-      res.send('success')
-    })
-  })
+  app.put('/updateProduct', products.updateProduct)
 }
 
 module.exports = setupExpress
