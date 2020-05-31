@@ -7,10 +7,12 @@ export enum PRODUCT_TYPES {
   FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS'
 }
 
-export type addProductType = ({ name, description, price, currency }: { name: string, description: string, price: number, currency: CURRENCY }) => () => Promise<any>
+export type addProductType = ({ name, description, price, currency }: { name: string, description: string, price: number, currency: CURRENCY }) => (dispatch: ({}) => Promise<any>) => Promise<any>
 
-export const addProduct: addProductType = ({ name, description, currency, price }) => () =>
-  addProductApi({ name, description, currency, price })
+export const addProduct: addProductType = ({ name, description, currency, price }) => async (dispatch) => {
+  await addProductApi({ name, description, currency, price })
+  dispatch(fetchProducts())
+}
 
 export const fetchProductsSuccess = (products: List<Record<ProductType>>) => ({
   type: 'FETCH_PRODUCTS_SUCCESS',
