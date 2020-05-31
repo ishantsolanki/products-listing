@@ -47,7 +47,7 @@ async (dispatch: any) => {
 }
 
 export const setProductUpdating = (product: Record<ProductType> | null) => ({
-  type: 'SET_PRODUCT_UPDATING',
+  type: PRODUCT_TYPES.SET_PRODUCT_UPDATING,
   product,
 })
 
@@ -56,7 +56,3 @@ export const updateProduct: updateProductType = ({ name, description, price, cur
   await updateProductApi({ name, description, currency, price, id })
   dispatch(fetchProducts())
 }
-
-export const resetUpdatingProduct = () => ({
-  type: PRODUCT_TYPES.RESET_PRODUCT_UPDATING
-})
