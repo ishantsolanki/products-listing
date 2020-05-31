@@ -47,3 +47,10 @@ export const fetchForexRatesApi = async () => {
   const response = await fetch('https://api.exchangeratesapi.io/latest?base=GBP')
   return await response.json()
 }
+
+export const deleteProductApi = async (id: string) => {
+  const options = {
+    method: 'DELETE',
+  }
+  return await fetch(`http://localhost:3001/deleteProduct?id=${id}`, options)
+}

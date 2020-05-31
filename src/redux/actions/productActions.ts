@@ -1,5 +1,5 @@
 import { List, Record } from 'immutable'
-import { addProductApi, fetchProductsApi, fetchForexRatesApi } from './api'
+import { addProductApi, fetchProductsApi, fetchForexRatesApi, deleteProductApi } from './api'
 import { CURRENCY, ProductType, forexRatesResultType } from '../../types/Product'
 
 export enum PRODUCT_TYPES {
@@ -36,4 +36,9 @@ export const fetchForexRates = () =>
 async (dispatch: any) => {
   const forexRatesResult = await fetchForexRatesApi()
   dispatch(setForexRates(forexRatesResult))
+}
+
+export const deleteProduct = (id: string) =>
+(dispatch: any) => {
+  return deleteProductApi(id)
 }

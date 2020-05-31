@@ -76,6 +76,21 @@ const setupExpress = () => {
       })))
     })
   })
+
+  app.delete('/deleteProduct', (req, res) => {
+    if (req.query.id) {
+      mongoDb.Product.findByIdAndRemove(req.query.id, (err) => {
+        if (err) {
+          res.sendStatus(400)
+          return
+        }
+
+        res.send('success')
+      })
+    } else {
+      res.sendStatus(400)
+    }
+  })
 }
 
 module.exports = setupExpress
