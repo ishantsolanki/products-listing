@@ -1,4 +1,4 @@
-import { ReduxState }from '../reducer/rootReducer'
+import { ReduxState } from '../reducer/rootReducer'
 
 export const getProductById = (id: string) => (state: ReduxState) => {
   return state.products.listing.find(product => product.get('id') === id)
