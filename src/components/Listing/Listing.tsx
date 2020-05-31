@@ -31,11 +31,11 @@ export const Listing: React.FC<Props> = ({
   }, [fetchProductsBound])
 
   return (
-    <>
+    <div className="grid grid-cols-3 grid-flow-row gap-4 mr-5">
       {products.map(product => (
-        <ProductCard id={product.get('id')} />
+        <ProductCard key={product.get('id')} id={product.get('id')} />
       ))}
-    </>
+    </div>
   )
 }
 

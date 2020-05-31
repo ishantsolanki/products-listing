@@ -15,11 +15,10 @@ interface Props {
 }
 
 export const ProductCard: React.FC<Props> = ({ product }) => product && (
-  <div>
-    <span>{product.get('name')}</span>
-    <span>{product.get('description')}</span>
-    <span>{product.get('price')}</span>
-    <span>{product.get('currency')}</span>
+  <div className="p-4 border-2 rounded-md hover:shadow">
+    <div className="font-bold text-teal-600">{product.get('name')}</div>
+    <div>{product.get('description')}</div>
+    <div>£{product.get('price')}</div>
   </div>
 )
 
