@@ -9,7 +9,7 @@ export enum PRODUCT_TYPES {
   RESET_PRODUCT_UPDATING = 'RESET_PRODUCT_UPDATING'
 }
 
-export type addProductType = ({ name, description, price, currency }: { name: string, description: string, price: number, currency: CURRENCY }) => (dispatch: ({}) => Promise<any>) => Promise<any>
+export type addProductType = ({ name, description, price, currency }: { name: string, description: string, price: number, currency: CURRENCY }) => (dispatch: (product: (dispatch: ({ type, products }:{ type: string, products: List<Record<ProductType>> }) => void) => Promise<any>) => Promise<any>) => Promise<any>
 
 export const addProduct: addProductType = ({ name, description, currency, price }) => async (dispatch) => {
   await addProductApi({ name, description, currency, price })
@@ -51,7 +51,7 @@ export const setProductUpdating = (product: Record<ProductType> | null) => ({
   product,
 })
 
-export type updateProductType = ({ name, description, price, currency, id }: { name: string, description: string, price: number, currency: CURRENCY, id: string }) => (dispatch: ({}) => Promise<any>) => Promise<any>
+export type updateProductType = ({ name, description, price, currency, id }: { name: string, description: string, price: number, currency: CURRENCY, id: string }) => (dispatch: (products: (dispatch: ({ type, products }:{ type: string, products: List<Record<ProductType>> }) => void) => Promise<any>) => Promise<any>) => Promise<any>
 export const updateProduct: updateProductType = ({ name, description, price, currency, id }) => async (dispatch) => {
   await updateProductApi({ name, description, currency, price, id })
   dispatch(fetchProducts())
