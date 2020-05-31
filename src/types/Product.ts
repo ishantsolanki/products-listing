@@ -20,7 +20,7 @@ export enum CURRENCY {
   JPY = 'JPY',
   KRW = 'KRW',
   MXN = 'MXN',
-  MYR = 'MYR4',
+  MYR = 'MYR',
   NOK = 'NOK',
   NZD = 'NZD',
   PHP = 'PHP',
