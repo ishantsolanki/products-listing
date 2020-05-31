@@ -39,6 +39,7 @@ async (dispatch: any) => {
 }
 
 export const deleteProduct = (id: string) =>
-(dispatch: any) => {
-  return deleteProductApi(id)
+async (dispatch: any) => {
+  await deleteProductApi(id)
+  dispatch(fetchProducts())
 }

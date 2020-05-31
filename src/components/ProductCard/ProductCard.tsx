@@ -49,7 +49,6 @@ export const ProductCard: React.FC<Props> | undefined = ({
             <button className="self-end py px-2 rounded border border-teal-600 bg-teal-100 btn-action invisible mr-2 text-teal-800">update</button>
             <button className="self-end py px-2 rounded border border-teal-600 bg-teal-100 btn-action invisible text-teal-800" onClick={onDeleteClick}>delete</button>
           </div>
-
         </div>
       )}
     </>
