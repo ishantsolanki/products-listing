@@ -1,11 +1,12 @@
 import { List, Record } from 'immutable'
-import { addProductApi, fetchProductsApi, fetchForexRatesApi, deleteProductApi } from './api'
+import { addProductApi, fetchProductsApi, fetchForexRatesApi, deleteProductApi, updateProductApi } from './api'
 import { CURRENCY, ProductType, forexRatesResultType } from '../../types/Product'
 
 export enum PRODUCT_TYPES {
   FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS',
   SET_FOREX_RATES = 'SET_FOREX_RATES',
-  SET_PRODUCT_UPDATING = 'SET_PRODUCT_UPDATING'
+  SET_PRODUCT_UPDATING = 'SET_PRODUCT_UPDATING',
+  RESET_PRODUCT_UPDATING = 'RESET_PRODUCT_UPDATING'
 }
 
 export type addProductType = ({ name, description, price, currency }: { name: string, description: string, price: number, currency: CURRENCY }) => (dispatch: ({}) => Promise<any>) => Promise<any>
@@ -45,7 +46,17 @@ async (dispatch: any) => {
   dispatch(fetchProducts())
 }
 
-export const setProductUpdating = (product: Record<ProductType>) => ({
+export const setProductUpdating = (product: Record<ProductType> | null) => ({
   type: 'SET_PRODUCT_UPDATING',
   product,
+})
+
+export type updateProductType = ({ name, description, price, currency, id }: { name: string, description: string, price: number, currency: CURRENCY, id: string }) => (dispatch: ({}) => Promise<any>) => Promise<any>
+export const updateProduct: updateProductType = ({ name, description, price, currency, id }) => async (dispatch) => {
+  await updateProductApi({ name, description, currency, price, id })
+  dispatch(fetchProducts())
+}
+
+export const resetUpdatingProduct = () => ({
+  type: PRODUCT_TYPES.RESET_PRODUCT_UPDATING
 })

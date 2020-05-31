@@ -54,3 +54,13 @@ export const deleteProductApi = async (id: string) => {
   }
   return await fetch(`http://localhost:3001/deleteProduct?id=${id}`, options)
 }
+
+export const updateProductApi = (formData: { name: string, description: string, currency: CURRENCY, price: number, id: string }) => {
+  const options = {
+    method: 'PUT',
+    body: JSON.stringify(formData),
+    headers,
+    mode: 'cors' as modes
+  }
+  return fetch('http://localhost:3001/updateProduct', options)
+}

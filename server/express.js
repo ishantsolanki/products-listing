@@ -91,6 +91,17 @@ const setupExpress = () => {
       res.sendStatus(400)
     }
   })
+
+  app.put('/updateProduct', (req, res) => {
+    mongoDb.Product.findByIdAndUpdate(req.body.id, req.body, (err, ) => {
+      if (err) {
+        res.sendStatus(400)
+        return
+      }
+
+      res.send('success')
+    })
+  })
 }
 
 module.exports = setupExpress

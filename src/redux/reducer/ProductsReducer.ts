@@ -8,13 +8,13 @@ import { ReduxState } from '../reducer/rootReducer'
 export interface ProductsReducerType {
   listing: List<Record<ProductType>>
   forexRates: forexRatesResultType['rates']
-  productUpdating: Record<ProductType> | null
+  updatingProduct: Record<ProductType> | null
 }
 
 const initialState = {
   listing: List(),
   forexRates: {},
-  productUpdating: null,
+  updatingProduct: null,
 }
 
 export const fetchProductsSuccessReducer = (state: ReduxState, action: { products: ProductType[]}) => {
@@ -34,13 +34,13 @@ export const setForexRatesReducer = (state: ReduxState, action: { forexRatesResu
 
 export const setProductUpdatingReducer = (state: ReduxState, action: { product: Record<ProductType> }) => ({
   ...state,
-  productUpdating: action.product,
+  updatingProduct: action.product,
 })
 
 const ProductsReducer = createReducer(initialState, {
   [PRODUCT_TYPES.FETCH_PRODUCTS_SUCCESS]: (state: ReduxState, action: { products: ProductType[]}) => fetchProductsSuccessReducer(state, action),
   [PRODUCT_TYPES.SET_FOREX_RATES]: (state: ReduxState, action: { forexRatesResult: forexRatesResultType}) => setForexRatesReducer(state, action),
-  [PRODUCT_TYPES.SET_PRODUCT_UPDATING]: (state: ReduxState, action: { product: Record<ProductType> }) => setProductUpdatingReducer(state, action)
+  [PRODUCT_TYPES.SET_PRODUCT_UPDATING]: (state: ReduxState, action: { product: Record<ProductType> }) => setProductUpdatingReducer(state, action),
 })
 
 export default ProductsReducer
