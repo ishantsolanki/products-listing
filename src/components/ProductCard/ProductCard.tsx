@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { ProductType } from '../../types/Product'
 import { ReduxState } from '../../redux/reducer/rootReducer'
-import { deleteProduct } from '../../redux/actions/productActions'
+import { deleteProduct, setProductUpdating } from '../../redux/actions/productActions'
 import './ProductCard.css'
 
 import { getProductById, getProductPriceinGBP } from '../../redux/selectors'
@@ -15,19 +15,22 @@ const mapStateToProps = (state: ReduxState, { id }: { id: string}) => ({
 })
 
 const mapDispatchToProps = {
-  deleteProductBound: deleteProduct
+  deleteProductBound: deleteProduct,
+  setProductUpdatingBound: setProductUpdating
 }
 
 interface Props {
   product: Record<ProductType> | undefined
   priceInGBP: number | null
   deleteProductBound: (id: string) => Promise<any>
+  setProductUpdatingBound: (product: Record<ProductType>) => void
 }
 
 export const ProductCard: React.FC<Props> | undefined = ({
   product,
   priceInGBP,
   deleteProductBound,
+  setProductUpdatingBound,
 }) => {
   const onDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (product) {
@@ -36,6 +39,12 @@ export const ProductCard: React.FC<Props> | undefined = ({
       }
     }
   }
+  const onUpdateClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (product) {
+      setProductUpdatingBound(product)
+    }
+  }
+
   return (
     <>
       {product && (
@@ -46,7 +55,7 @@ export const ProductCard: React.FC<Props> | undefined = ({
             {priceInGBP && (
               <div className="font-bold text-teal-800 flex-grow">£{priceInGBP}</div>
             )}
-            <button className="self-end py px-2 rounded border border-teal-600 bg-teal-100 btn-action invisible mr-2 text-teal-800">update</button>
+            <button className="self-end py px-2 rounded border border-teal-600 bg-teal-100 btn-action invisible mr-2 text-teal-800" onClick={onUpdateClick}>update</button>
             <button className="self-end py px-2 rounded border border-teal-600 bg-teal-100 btn-action invisible text-teal-800" onClick={onDeleteClick}>delete</button>
           </div>
         </div>

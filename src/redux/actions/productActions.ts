@@ -4,7 +4,8 @@ import { CURRENCY, ProductType, forexRatesResultType } from '../../types/Product
 
 export enum PRODUCT_TYPES {
   FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS',
-  SET_FOREX_RATES = 'SET_FOREX_RATES'
+  SET_FOREX_RATES = 'SET_FOREX_RATES',
+  SET_PRODUCT_UPDATING = 'SET_PRODUCT_UPDATING'
 }
 
 export type addProductType = ({ name, description, price, currency }: { name: string, description: string, price: number, currency: CURRENCY }) => (dispatch: ({}) => Promise<any>) => Promise<any>
@@ -43,3 +44,8 @@ async (dispatch: any) => {
   await deleteProductApi(id)
   dispatch(fetchProducts())
 }
+
+export const setProductUpdating = (product: Record<ProductType>) => ({
+  type: 'SET_PRODUCT_UPDATING',
+  product,
+})
