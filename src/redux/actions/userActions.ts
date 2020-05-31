@@ -7,5 +7,7 @@ export const signupUser = ({ userEmail, password }: {userEmail: string, password
   signupApi({ userEmail, password })
 
 export const checkUser = ({ userEmail, password }: {userEmail: string, password: string}) =>
-  (dispatch: dispatchType) =>
-  checkUserCredentialsApi({ userEmail, password }).then(response => response.json())
+  async (dispatch: dispatchType) => {
+    const response = await checkUserCredentialsApi({ userEmail, password })
+    return response.json()
+  }
