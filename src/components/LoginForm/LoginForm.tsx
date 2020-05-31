@@ -39,8 +39,8 @@ export const LoginForm: React.FC<Props> = ({
     checkUserBound({ userEmail, password })
       .then((response) => {
         if (response.result) {
-          history.push('/listings')
           setIsFormValid(true)
+          history.push('/listings')
         } else {
           setIsFormValid(false)
         }

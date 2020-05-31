@@ -99,6 +99,7 @@ export const Sidebar: React.FC<Props> = ({
 
   const handleUpdateCancel = () => {
     setProductUpdatingBound(null)
+    resetForm()
   }
 
   return (
@@ -170,10 +171,10 @@ export const Sidebar: React.FC<Props> = ({
             Update listing
           </button>
           <button
-            className="px-4 py-2 border-teal-300 border rounded-md bg-teal-400 text-white font-bold ml-2"
+            className="px-4 py-2 border-teal-300 border rounded-md text-teal-400 text-white font-bold ml-2"
             onClick={handleUpdateCancel}
           >
-            cancel
+            Cancel
           </button>
           </>
         ) : (

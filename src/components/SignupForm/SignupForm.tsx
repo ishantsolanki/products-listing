@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, MouseEvent } from 'react'
+import React, { useState, useEffect, ChangeEvent, MouseEvent } from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -30,12 +30,10 @@ export const LoginForm: React.FC<Props> = ({
   }
 
   const onPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPasswordStateInvalid(false)
     setPassword(event.target.value)
   }
 
   const onConfirmPasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPasswordStateInvalid(false)
     setConfirmPassword(event.target.value)
   }
 
@@ -61,6 +59,11 @@ export const LoginForm: React.FC<Props> = ({
       }).then(() => history.push('/login#signedup'))
     }
   }
+
+  useEffect(() => {
+    setEmailInvalid(false)
+    setPasswordStateInvalid(false)
+  }, [userEmail, password, confirmPassword])
 
   return (
     <div className="container mx-auto text-center max-w-md pt-40">
