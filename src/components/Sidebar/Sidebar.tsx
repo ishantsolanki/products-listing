@@ -148,7 +148,7 @@ export const Sidebar: React.FC<Props> = ({
 
         <InputRow label="currency">
           <select
-            id="price"
+            id="currency"
             className={inputClassName}
             value={currency}
             onChange={(e) => setCurrency(e.target.value as CURRENCY)}
