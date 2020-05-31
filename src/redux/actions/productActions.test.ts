@@ -4,6 +4,8 @@ import * as productActions from './productActions'
 import * as api from './api'
 import { CURRENCY } from '../../types/Product'
 
+jest.mock('./api')
+
 const forexRatesMock = {  rates: { AUD: 30, BGN: 30, BRL: 30, CAD: 30, CHF: 30, CNY: 30, CZK: 30, DKK: 30, EUR: 30, GBP: 30, HKD: 30, HRK: 30, HUF: 30, IDR: 30, ILS: 30, INR: 30, ISK: 30, JPY: 30, KRW: 30, MXN: 30, MYR: 30, NOK: 30, NZD: 30, PHP: 30, PLN: 30, RON: 30, RUB: 30, SEK: 30, SGD: 30, THB: 30, TRY: 30, USD: 30, ZAR: 30}}
 
 test('addProduct adds a product and updates products listing', async () => {
