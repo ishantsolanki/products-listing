@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { ProductType } from '../../types/Product'
 
-import { fetchProducts } from '../../redux/actions/productActions'
+import { fetchProducts, fetchForexRates } from '../../redux/actions/productActions'
 
 import ProductCard from '../ProductCard/ProductCard'
 
@@ -13,22 +13,25 @@ export const mapStateToProps = (state: any) => ({
 })
 
 export const mapDispatchToProps = {
-  fetchProductsBound: fetchProducts
+  fetchProductsBound: fetchProducts,
+  fetchForexRatesBound: fetchForexRates
 }
 
 interface Props {
   products: List<Record<ProductType>>
   fetchProductsBound: () => Promise<any>
+  fetchForexRatesBound: () => Promise<any>
 }
 
 export const Listing: React.FC<Props> = ({
   products,
   fetchProductsBound,
+  fetchForexRatesBound,
 }) => {
 
   useEffect(() => {
-    fetchProductsBound()
-  }, [fetchProductsBound])
+    fetchForexRatesBound().then(fetchProductsBound)
+  }, [fetchForexRatesBound, fetchProductsBound])
 
   return (
     <div className="grid grid-cols-3 grid-flow-row gap-4 mr-5">
