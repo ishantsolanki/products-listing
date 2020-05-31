@@ -4,7 +4,7 @@ interface InputRowProps {
   label: string,
 }
 
-const InputRow: React.FC<InputRowProps> = ({
+export const InputRow: React.FC<InputRowProps> = ({
   label,
   children
 }) => (
