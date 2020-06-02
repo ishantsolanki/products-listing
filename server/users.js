@@ -16,7 +16,7 @@ const signUp = (req, res) => {
       res.sendStatus(400)
       return
     }
-    res.send('success')
+    res.json({result: true})
   })
 }
 

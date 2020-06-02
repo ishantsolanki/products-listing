@@ -17,7 +17,7 @@ const addProduct = (req, res) => {
       return
     }
 
-    res.send('success')
+    res.json({result: true})
   })
 }
 
@@ -44,7 +44,7 @@ const deleteProduct = (req, res) => {
         return
       }
 
-      res.send('success')
+      res.json({result: true})
     })
   } else {
     res.sendStatus(400)
@@ -58,7 +58,7 @@ const updateProduct = (req, res) => {
       return
     }
 
-    res.send('success')
+    res.json({result: true})
   })
 }
 
