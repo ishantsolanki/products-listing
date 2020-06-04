@@ -1,30 +1,57 @@
-import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { Record } from 'immutable'
+import React, { useState, useEffect } from "react"
+import { connect } from "react-redux"
+import { Record } from "immutable"
 
-import { ProductType, CURRENCY } from '../../types/Product'
-import InputRow from '../InputRow/InputRow'
+import { ProductType, CURRENCY } from "../../types/Product"
+import InputRow from "../InputRow/InputRow"
 
-import { ReduxState } from '../../redux/reducer/rootReducer'
+import { ReduxState } from "../../redux/reducer/rootReducer"
 
-import { addProduct, updateProduct, setProductUpdating } from '../../redux/actions/productActions'
+import {
+  addProduct,
+  updateProduct,
+  setProductUpdating,
+} from "../../redux/actions/productActions"
 
-const inputClassName = 'bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-md py-2 px-4 appearance-none leading-normal w-2/3';
+const inputClassName =
+  "bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-md py-2 px-4 appearance-none leading-normal w-2/3"
 
 const mapStateToProps = (state: ReduxState) => ({
-  updatingProduct: state.products.updatingProduct
+  updatingProduct: state.products.updatingProduct,
 })
 
 const mapDispatchToProps = {
   addProductBound: addProduct,
   updateProductBound: updateProduct,
-  setProductUpdatingBound: setProductUpdating
+  setProductUpdatingBound: setProductUpdating,
 }
 
 interface Props {
   updatingProduct: Record<ProductType> | null
-  addProductBound: ({ name, description, price, currency }: { name: string, description: string, price: number, currency: CURRENCY }) => Promise<any>
-  updateProductBound: ({ name, description, price, currency, id }: { name: string, description: string, price: number, currency: CURRENCY, id: string }) => Promise<any>
+  addProductBound: ({
+    name,
+    description,
+    price,
+    currency,
+  }: {
+    name: string
+    description: string
+    price: number
+    currency: CURRENCY
+  }) => Promise<any>
+  updateProductBound: ({
+    name,
+    description,
+    price,
+    currency,
+    id,
+  }: {
+    name: string
+    description: string
+    price: number
+    currency: CURRENCY
+    id: string
+  }) => Promise<any>
   setProductUpdatingBound: (product: Record<ProductType> | null) => void
 }
 
@@ -34,19 +61,19 @@ export const Sidebar: React.FC<Props> = ({
   updateProductBound,
   setProductUpdatingBound,
 }) => {
-  const options = [];
-  const [name, setName] = useState<string>('')
-  const [description, setDescription] = useState<string>('')
-  const [price, setPrice] = useState<string>('0')
+  const options = []
+  const [name, setName] = useState<string>("")
+  const [description, setDescription] = useState<string>("")
+  const [price, setPrice] = useState<string>("0")
   const [currency, setCurrency] = useState<CURRENCY>(CURRENCY.AUD)
   const [isInvalidInputs, setIsInvalidInputs] = useState<boolean>(false)
 
   useEffect(() => {
     if (updatingProduct) {
-      setName(updatingProduct.get('name'))
-      setDescription(updatingProduct.get('description'))
-      setPrice(String(updatingProduct.get('price')))
-      setCurrency(updatingProduct.get('currency'))
+      setName(updatingProduct.get("name"))
+      setDescription(updatingProduct.get("description"))
+      setPrice(String(updatingProduct.get("price")))
+      setCurrency(updatingProduct.get("currency"))
     }
   }, [updatingProduct])
 
@@ -54,14 +81,14 @@ export const Sidebar: React.FC<Props> = ({
     setIsInvalidInputs(false)
   }, [name, description, price, currency])
 
-  for(let option in CURRENCY) {
+  for (let option in CURRENCY) {
     options.push(option)
   }
 
   const resetForm = () => {
-    setName('')
-    setDescription('')
-    setPrice('0')
+    setName("")
+    setDescription("")
+    setPrice("0")
     setCurrency(CURRENCY.AUD)
   }
 
@@ -73,7 +100,7 @@ export const Sidebar: React.FC<Props> = ({
         name,
         description,
         price: Number(price),
-        currency
+        currency,
       }).then(resetForm)
     } else {
       setIsInvalidInputs(true)
@@ -89,7 +116,7 @@ export const Sidebar: React.FC<Props> = ({
         description,
         price: Number(price),
         currency,
-        id: updatingProduct.get('id')
+        id: updatingProduct.get("id"),
       }).then(() => {
         resetForm()
         setProductUpdatingBound(null)
@@ -106,12 +133,13 @@ export const Sidebar: React.FC<Props> = ({
     <div>
       {!!updatingProduct ? (
         <div className="text-center py-2 bg-teal-100">
-          Update <span className="text-teal-600 font-bold">{updatingProduct.get('name')}</span>
+          Update{" "}
+          <span className="text-teal-600 font-bold">
+            {updatingProduct.get("name")}
+          </span>
         </div>
       ) : (
-        <div className="text-center py-2">
-          List a new Product
-        </div>
+        <div className="text-center py-2">List a new Product</div>
       )}
 
       <hr />
@@ -145,7 +173,6 @@ export const Sidebar: React.FC<Props> = ({
           />
         </InputRow>
 
-
         <InputRow label="currency">
           <select
             id="currency"
@@ -153,38 +180,44 @@ export const Sidebar: React.FC<Props> = ({
             value={currency}
             onChange={(e) => setCurrency(e.target.value as CURRENCY)}
           >
-            {options.map(value => <option key={value} value={value}>{value}</option>)}
+            {options.map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
           </select>
         </InputRow>
 
         {isInvalidInputs && (
-          <div className="text-red-400 text-center pb-3">Cannot add a product with empty fields</div>
+          <div className="text-red-400 text-center pb-3">
+            Cannot add a product with empty fields
+          </div>
         )}
 
         <div className="text-center">
-        {!!updatingProduct ? (
-          <>
-          <button
-            className="px-4 py-2 border-teal-300 border rounded-md bg-teal-400 text-white font-bold mr-2"
-            onClick={handleUpdateListing}
-          >
-            Update listing
-          </button>
-          <button
-            className="px-4 py-2 border-teal-300 border rounded-md text-teal-400 text-white font-bold ml-2"
-            onClick={handleUpdateCancel}
-          >
-            Cancel
-          </button>
-          </>
-        ) : (
-          <button
-            className="px-4 py-2 border-teal-300 border rounded-md bg-teal-400 text-white font-bold"
-            onClick={handleSubmit}
-          >
-            Add to listing
-          </button>
-        )}
+          {!!updatingProduct ? (
+            <>
+              <button
+                className="px-4 py-2 border-teal-300 border rounded-md bg-teal-400 text-white font-bold mr-2"
+                onClick={handleUpdateListing}
+              >
+                Update listing
+              </button>
+              <button
+                className="px-4 py-2 border-teal-300 border rounded-md text-teal-400 text-white font-bold ml-2"
+                onClick={handleUpdateCancel}
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <button
+              className="px-4 py-2 border-teal-300 border rounded-md bg-teal-400 text-white font-bold"
+              onClick={handleSubmit}
+            >
+              Add to listing
+            </button>
+          )}
         </div>
       </div>
     </div>

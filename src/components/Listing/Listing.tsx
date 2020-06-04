@@ -1,20 +1,23 @@
-import React, { useEffect } from 'react'
-import { List, Record } from 'immutable'
-import { connect } from 'react-redux'
+import React, { useEffect } from "react"
+import { List, Record } from "immutable"
+import { connect } from "react-redux"
 
-import { ProductType } from '../../types/Product'
+import { ProductType } from "../../types/Product"
 
-import { fetchProducts, fetchForexRates } from '../../redux/actions/productActions'
+import {
+  fetchProducts,
+  fetchForexRates,
+} from "../../redux/actions/productActions"
 
-import ProductCard from '../ProductCard/ProductCard'
+import ProductCard from "../ProductCard/ProductCard"
 
 export const mapStateToProps = (state: any) => ({
-  products: state.products.listing
+  products: state.products.listing,
 })
 
 export const mapDispatchToProps = {
   fetchProductsBound: fetchProducts,
-  fetchForexRatesBound: fetchForexRates
+  fetchForexRatesBound: fetchForexRates,
 }
 
 interface Props {
@@ -28,7 +31,6 @@ export const Listing: React.FC<Props> = ({
   fetchProductsBound,
   fetchForexRatesBound,
 }) => {
-
   useEffect(() => {
     fetchForexRatesBound().then(fetchProductsBound)
   }, [fetchForexRatesBound, fetchProductsBound])
@@ -36,12 +38,14 @@ export const Listing: React.FC<Props> = ({
   return (
     <>
       <div className="grid grid-cols-3 grid-flow-row gap-4 mr-5">
-        {products.map(product => (
-          <ProductCard key={product.get('id')} id={product.get('id')} />
+        {products.map((product) => (
+          <ProductCard key={product.get("id")} id={product.get("id")} />
         ))}
       </div>
       {products.size === 0 && (
-        <div className="mt-10 text-center text-bold italic text-xl text-teal-600">No products created. Create you first product!</div>
+        <div className="mt-10 text-center text-bold italic text-xl text-teal-600">
+          No products created. Create you first product!
+        </div>
       )}
     </>
   )

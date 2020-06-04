@@ -1,6 +1,6 @@
-import React from 'react'
-import Listing from '../Listing/Listing'
-import Sidebar from '../Sidebar/Sidebar'
+import React from "react"
+import Listing from "../Listing/Listing"
+import Sidebar from "../Sidebar/Sidebar"
 
 export const ListingsLayout = () => {
   return (

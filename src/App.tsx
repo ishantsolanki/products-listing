@@ -1,17 +1,13 @@
-import React from 'react'
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from 'react-router-dom'
-import { Provider } from 'react-redux'
-import store from './redux/store'
-import './tailwind.generated.css'
+import React from "react"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { Provider } from "react-redux"
+import store from "./redux/store"
+import "./tailwind.generated.css"
 
-import Header from './components/Header/Header'
-import LoginForm from './components/LoginForm/LoginForm'
-import SignupForm from './components/SignupForm/SignupForm'
-import ListingsLayout from './components/ListingsLayout/ListingsLayout'
+import Header from "./components/Header/Header"
+import LoginForm from "./components/LoginForm/LoginForm"
+import SignupForm from "./components/SignupForm/SignupForm"
+import ListingsLayout from "./components/ListingsLayout/ListingsLayout"
 
 const App: React.FC = () => (
   <Provider store={store}>
@@ -25,6 +21,6 @@ const App: React.FC = () => (
       </Switch>
     </Router>
   </Provider>
-);
+)
 
-export default App;
+export default App
