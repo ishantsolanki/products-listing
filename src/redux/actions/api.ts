@@ -1,11 +1,17 @@
 import { CURRENCY } from "../../types/Product"
 
-type modes = "cors" | "navigate" | "no-cors" | "same-origin" | undefined
+type corsModeType = "cors" | "navigate" | "no-cors" | "same-origin" | undefined
 
 const headers = {
   "Access-Control-Allow-Origin": "*",
   "Content-Type": "application/json",
 }
+
+const API_ENDPOINT = process.env.REACT_APP_API_HOST
+  ? `${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`
+  : ""
+
+const corsMode: corsModeType = "cors"
 
 export const signupApi = (formData: {
   userEmail: string
@@ -15,9 +21,9 @@ export const signupApi = (formData: {
     method: "PUT",
     body: JSON.stringify(formData),
     headers,
-    mode: "cors" as modes,
+    mode: corsMode,
   }
-  return fetch("http://localhost:3001/signup", options)
+  return fetch(`${API_ENDPOINT}/signup`, options)
 }
 
 export const checkUserCredentialsApi = (formData: {
@@ -28,9 +34,9 @@ export const checkUserCredentialsApi = (formData: {
     method: "PUT",
     body: JSON.stringify(formData),
     headers,
-    mode: "cors" as modes,
+    mode: corsMode,
   }
-  return fetch("http://localhost:3001/checkUser", options)
+  return fetch(`${API_ENDPOINT}/checkUser`, options)
 }
 
 export const addProductApi = (formData: {
@@ -43,13 +49,13 @@ export const addProductApi = (formData: {
     method: "POST",
     body: JSON.stringify(formData),
     headers,
-    mode: "cors" as modes,
+    mode: corsMode,
   }
-  return fetch("http://localhost:3001/addProduct", options)
+  return fetch(`${API_ENDPOINT}/addProduct`, options)
 }
 
 export const fetchProductsApi = async () => {
-  const response = await fetch("http://localhost:3001/fetchProducts")
+  const response = await fetch(`${API_ENDPOINT}/fetchProducts`)
   return await response.json()
 }
 
@@ -64,7 +70,7 @@ export const deleteProductApi = async (id: string) => {
   const options = {
     method: "DELETE",
   }
-  return await fetch(`http://localhost:3001/deleteProduct?id=${id}`, options)
+  return await fetch(`${API_ENDPOINT}/deleteProduct?id=${id}`, options)
 }
 
 export const updateProductApi = (formData: {
@@ -78,7 +84,7 @@ export const updateProductApi = (formData: {
     method: "PUT",
     body: JSON.stringify(formData),
     headers,
-    mode: "cors" as modes,
+    mode: corsMode,
   }
-  return fetch("http://localhost:3001/updateProduct", options)
+  return fetch(`${API_ENDPOINT}/updateProduct`, options)
 }
